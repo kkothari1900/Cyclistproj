@@ -25,15 +25,19 @@ dim(cyclist)
 
 #Visualizations:
 library(ggplot2)
+jpeg("freqstartidHist.jpg")
 startedAt <- cyclist$start_station_id
 start <- hist(startedAt,main="Frequency of Cyclist Start Stations",
 xlab="Start Station Id's")
 text(start$mids,start$counts,labels = start$counts,adj = c(0.5,-0.5))
+dev.off()
 
+jpeg("freqendIdHist.jpg")
 EndedStat <- cyclist$end_station_id
 end <- hist(EndedStat,main="Frequency of Cyclist End Stations",
 xlab="End Station Id's")
 text(end$mids,end$counts,labels = end$counts,adj = c(0.5,-0.5))
+dev.off()
 
 ```
 
@@ -79,19 +83,22 @@ cyclist3 <- separate(cyclist,end_date,  c("end_year","end_month","end_day"))
 
 
 
-# Plotting the start date 
+# Plotting the start date (Month)
 sapply(cyclist2,class)
 StartedMonth <- as.numeric(cyclist2$start_month)
 startM <- hist(StartedMonth,main="Frequency of Cyclist Start Months",
-xlab="Months ")
-text(startM$mids,startM$counts,labels = startM$counts,adj = c(0.6,-0.06))
+xlab="Months ",labels = TRUE)
 
-#Plotting the End Date 
+
+#Plotting the End Date (Month)
 sapply(cyclist3,class)
 EndedMonth <- as.numeric(cyclist3$end_month)
 EndM <- hist(EndedMonth,main="Frequency of Cyclist End Months",
-xlab="Months ")
-text(EndM$mids,EndM$counts,labels = EndM$counts,adj = c(0.6,-0.6))
+xlab="Months ", labels = TRUE)
+
+# Plotting the Start date (Year)
+
+
 
 
 ```

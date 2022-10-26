@@ -52,7 +52,7 @@ We observe that there is a higher frequency of stations that cyclist start their
 ##The second histogram: Frequency of Cyclist End Station Id's 
 We observe a similar trend of a higher frequency of end stations are used with the ids (0-100) than those with ids in the range of (350-700).
 
-#Why Is this?
+
 
 
 
@@ -109,3 +109,9 @@ Start at and End at
  - Current Format date(YYYY/MM/DD) and Time 
  - New format date needs its own column and time needs to be 
 
+
+#Investigating 
+- How are annual member and casual member trips different? 
+i. (are their trips shorter or longer?)
+ii. (Which stations do annual members use more frequently)?
+iii. (Which stations do casual users use more frequently)?

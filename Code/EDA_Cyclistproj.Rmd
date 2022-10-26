@@ -115,3 +115,28 @@ Start at and End at
 i. (are their trips shorter or longer?)
 ii. (Which stations do annual members use more frequently)?
 iii. (Which stations do casual users use more frequently)?
+
+```{r}
+# Sorting out casual members: 
+library(dplyr)
+
+#an_members <- cyclist[order(cyclist$member_casual),]
+#head(an_members)
+annual_mem <- filter(cyclist, member_casual =="member")
+
+# Cacluting distance of trips from longitute and latitude of all annual  members 
+# This section will include the use of the package geosphere 
+library(geosphere)
+annual_mem %>% rowwise%>% mutate(distance=distm(x=c(start_lng,start_lat),y=c(end_lng,end_lat)))
+
+#Sorting out annual members 
+casual_mem <- filter(cyclist,member_casual =="casual")
+
+# Cacluting distance of trips from longitute and latitude of all casual  members 
+casual_mem %>% rowwise %>% mutate(distance = distm(x = c(start_lng,start_lat),y=c(end_lng,end_lat)))
+
+
+
+
+```
+

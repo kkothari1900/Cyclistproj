@@ -135,8 +135,11 @@ casual_mem <- filter(cyclist,member_casual =="casual")
 # Cacluting distance of trips from longitute and latitude of all casual  members 
 casual_mem %>% rowwise %>% mutate(distance = distm(x = c(start_lng,start_lat),y=c(end_lng,end_lat)))
 
-
+# Conversion of Distance units
+library(measurements)
 
 
 ```
 
+# Distance Explained 
+The Distm() function is used to calculate the distance of the start (longitude, latitude) and end (longitude, latitude) coordinates.When this function is used, it automatically calculated in meters. There will be a conversion of metrics using the measurements library from meters to meters to ** miles or kilometers. 

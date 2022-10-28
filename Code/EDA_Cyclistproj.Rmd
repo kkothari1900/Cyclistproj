@@ -128,6 +128,7 @@ annual_mem <- filter(cyclist, member_casual =="member")
 # This section will include the use of the package geosphere 
 library(geosphere)
 annual_mem %>% rowwise%>% mutate(distance=distm(x=c(start_lng,start_lat),y=c(end_lng,end_lat)))
+head(annual_mem)
 
 #Sorting out annual members 
 casual_mem <- filter(cyclist,member_casual =="casual")
@@ -137,9 +138,12 @@ casual_mem %>% rowwise %>% mutate(distance = distm(x = c(start_lng,start_lat),y=
 
 # Conversion of Distance units
 library(measurements)
+conv_unit(annual_mem)
 
 
 ```
 
 # Distance Explained 
 The Distm() function is used to calculate the distance of the start (longitude, latitude) and end (longitude, latitude) coordinates.When this function is used, it automatically calculated in meters. There will be a conversion of metrics using the measurements library from meters to meters to ** miles or kilometers. 
+
+Using distHaversine() instead of distm() 

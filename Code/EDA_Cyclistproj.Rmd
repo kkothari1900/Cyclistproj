@@ -10,7 +10,11 @@ date: "2022-10-12"
 cyclist <- read.csv("C:/Users/Kareena/Desktop/Personal Project/Casestudy_cyclisticOct22/Data/Divvy_Trips_2020_Q1.csv")
 
 #Taking a look at data 
-#head(cyclist) - 13 variables, 426887 observations 
+head(cyclist)  #13 variables, 426887 observations 
+
+# Checking if there are any NA values 
+
+sum(is.na(cyclist))
 
 ```
 
@@ -119,22 +123,28 @@ iii. (Which stations do casual users use more frequently)?
 ```{r}
 # Sorting out casual members: 
 library(dplyr)
+library(pracma)
+library(geosphere)
+library(data.table)
 
 #an_members <- cyclist[order(cyclist$member_casual),]
 #head(an_members)
 annual_mem <- filter(cyclist, member_casual =="member")
+annual_mem_2 <- data.frame(annual_mem$start_lng,annual_mem$start_lat,annual_mem$end_lng,annual_mem$end_lat)
 
 # Cacluting distance of trips from longitute and latitude of all annual  members 
 # This section will include the use of the package geosphere 
 library(geosphere)
-annual_mem %>% rowwise%>% mutate(distance=distm(x=c(start_lng,start_lat),y=c(end_lng,end_lat)))
+annual_mem %>% rowwise%>% mutate(distance=distm(x=c(start_lng,start_lat),y=c(end_lng,end_lat),fun = distGeo))
+
+
 head(annual_mem)
 
 #Sorting out annual members 
 casual_mem <- filter(cyclist,member_casual =="casual")
 
 # Cacluting distance of trips from longitute and latitude of all casual  members 
-casual_mem %>% rowwise %>% mutate(distance = distm(x = c(start_lng,start_lat),y=c(end_lng,end_lat)))
+casual_mem %>% rowwise %>% mutate(distance = distm(x = c(start_lng,start_lat),y=c(end_lng,end_lat),fun = distGeo))
 
 # Conversion of Distance units
 library(measurements)
@@ -145,5 +155,13 @@ conv_unit(annual_mem)
 
 # Distance Explained 
 The Distm() function is used to calculate the distance of the start (longitude, latitude) and end (longitude, latitude) coordinates.When this function is used, it automatically calculated in meters. There will be a conversion of metrics using the measurements library from meters to meters to ** miles or kilometers. 
+**NEWUPDATE**
+Using fun= distGeo, This is Distance on an ellipsoid (the geodesic). This function is an accurate estimate of the shortest distance between two points on an ellipsoid (default is WGS84 ellpsoid) 
 
-Using distHaversine() instead of distm() 
+Geodesic: The shortest path between two points on an ellipsoid 
+```{r}
+
+
+
+```
+

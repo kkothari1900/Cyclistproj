@@ -169,11 +169,20 @@ This fnction finds the distance between two points. This method assumes a spheri
 
 ```{r}
 #Plotting annual member distances: 
-barplot(annual_mem$distance,horiz = TRUE,xlab = "Distance (Miles)",ylab = "",main = "Annual Member Cyclist Distance")
-
+jpeg("annualmemDist.jpeg")
 annualdist <- annual_mem$distance
 ad <- hist(annualdist,main = "Annual Members Distance Traveled",xlab = "Distance (Miles)",xlim = c(0,10),size = 1)
 text(ad$mids,ad$counts,labels=ad$counts,adj = c(0.5,-0.5))
+dev.off()
+
+
+
+#Plotting Casual member distances: 
+jpeg("casualmemDist.jpeg")
+casualdist <- casual_mem$distance
+cd <- hist(casualdist,main = "Casual Cyclist Users Distance Traveled",xlab = "Distance (Miles)",xlim = c(0,10),size = 1)
+text(cd$mids,cd$counts,labels=cd$counts,adj = c(0.5,-0.5))
+dev.off()
 
 ```
 

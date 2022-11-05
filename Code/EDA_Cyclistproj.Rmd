@@ -5,6 +5,22 @@ date: "2022-10-12"
 
 ---
 
+
+```{r}
+# Libraries and Packages 
+library(dplyr)
+library(pracma)
+library(geosphere)
+library(data.table)
+library(ggplot2)
+library(tidyverse)
+library(lubridate)
+
+```
+
+
+
+
 ```{r}
 #Data Load In : 
 cyclist <- read.csv("C:/Users/Kareena/Desktop/Personal Project/Casestudy_cyclisticOct22/Data/Divvy_Trips_2020_Q1.csv")
@@ -28,7 +44,7 @@ dim(cyclist)
 
 
 #Visualizations:
-library(ggplot2)
+
 jpeg("freqstartidHist.jpg")
 startedAt <- cyclist$start_station_id
 start <- hist(startedAt,main="Frequency of Cyclist Start Stations",
@@ -75,8 +91,6 @@ cyclist$end_time <- format(as.POSIXct(cyclist$ended_at),format = "%H:%M:%S")
 cyclist$end_time <- format(as.POSIXct(cyclist$end_time,format = "%H:%M:%S"),format ="%I:%M:%S %p")
 
 
-library(tidyverse)
-library(lubridate)
 #separate(cyclist,start_date,c("Start_Year","Start_Month","Start_Day"),sep = " ")
 #separate(cyclist,end_date,c("End_Year","End_Month","End_Day"),sep = "-")
 
@@ -121,29 +135,26 @@ ii. (Which stations do annual members use more frequently)?
 iii. (Which stations do casual users use more frequently)?
 
 ```{r}
-# Sorting out casual members: 
-library(dplyr)
-library(pracma)
-library(geosphere)
-library(data.table)
+
 
 #an_members <- cyclist[order(cyclist$member_casual),]
 #head(an_members)
-annual_mem <- filter(cyclist, member_casual =="member")
+annual_mem <- filter(cyclist2, member_casual =="member")
 
 # Cacluting distance of trips from longitute and latitude of all annual  members 
 # This section will include the use of the package geosphere 
-library(geosphere)
-annual_mem %>% rowwise()%>% mutate(distance=distm(x=c(start_lng,start_lat),y=c(end_lng,end_lat),fun = distHaversine)[,1]/1609)
+
+annual_mem<- annual_mem %>% rowwise()%>% mutate(distance=distm(x=c(start_lng,start_lat),y=c(end_lng,end_lat),fun = distHaversine)[,1]/1609)
 
 
 head(annual_mem)
 
 #Sorting out annual members 
-casual_mem <- filter(cyclist,member_casual =="casual")
+casual_mem <- filter(cyclist2,member_casual =="casual")
 
 # Cacluting distance of trips from longitute and latitude of all casual  members 
-casual_mem %>% rowwise %>% mutate(distance = distm(x = c(start_lng,start_lat),y=c(end_lng,end_lat),fun = distHaversine)[,1]/1609)
+casual_mem<- casual_mem %>% rowwise %>% mutate(distance = distm(x = c(start_lng,start_lat),y=c(end_lng,end_lat),fun = distHaversine)[,1]/1609)
+
 
 
 ```
@@ -157,8 +168,12 @@ This fnction finds the distance between two points. This method assumes a spheri
 
 
 ```{r}
+#Plotting annual member distances: 
+barplot(annual_mem$distance,horiz = TRUE,xlab = "Distance (Miles)",ylab = "",main = "Annual Member Cyclist Distance")
 
-
+annualdist <- annual_mem$distance
+ad <- hist(annualdist,main = "Annual Members Distance Traveled",xlab = "Distance (Miles)",xlim = c(0,10),size = 1)
+text(ad$mids,ad$counts,labels=ad$counts,adj = c(0.5,-0.5))
 
 ```
 

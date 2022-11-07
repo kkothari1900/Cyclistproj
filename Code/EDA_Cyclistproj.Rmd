@@ -142,6 +142,7 @@ iii. (Which stations do casual users use more frequently)?
 annual_mem <- filter(cyclist2, member_casual =="member")
 
 # Cacluting distance of trips from longitute and latitude of all annual  members 
+cyclist2_a <- cyclist2 %>% rowwise()%>% mutate(distance=distm(x=c(start_lng,start_lat),y=c(end_lng,end_lat),fun = distHaversine)[,1]/1609)
 # This section will include the use of the package geosphere 
 
 annual_mem<- annual_mem %>% rowwise()%>% mutate(distance=distm(x=c(start_lng,start_lat),y=c(end_lng,end_lat),fun = distHaversine)[,1]/1609)
@@ -187,9 +188,15 @@ dev.off()
 ```
 ```{r}
 # Bar plots: 
-barplot(table(annual_mem$start_month),main = "Annual Members Number of Use By Month",xlab = "Month",ylab = "Count",border = "black",names.arg = c("Jan","Feb","Mar"),col = "blue",density = 50000)
+jpeg("annualmentmonth.jpeg")
+barplot(table(annual_mem$start_month),main = "Annual Members Number of Use By Month",xlab = "Month",ylab = "Number of Cyclist",border = "black",names.arg = c("Jan","Feb","Mar"),col = "blue",density = 50000)
+dev.off()
 
-barplot(table(casual_mem$start_month),main = "Casual Cyclist Users Number of Use By Month",xlab = "Month",ylab = "Count",names.arg = c("Jan","Feb","Mar"),border = "black",col = "red",density = 50000)
+jpeg("casualmemmonth.jpeg")
+barplot(table(casual_mem$start_month),main = "Casual Cyclist Users Number of Use By Month",xlab = "Month",ylab = "Number of Cyclist",names.arg = c("Jan","Feb","Mar"),border = "black",col = "gray",density = 50000)+geom_text(aes(label = signif(Start_month)))
+dev.off()
 
-
+jpeg("CasualAnnualCompar.jpeg")
+ggplot(cyclist2_a,aes(x=start_month,y=distance,fill =member_casual))+geom_bar(stat="identity")+labs(title = "Casual Vs. Annual Members",x = "Months",y ="Number of Rides")+guides(fill = guide_legend(title = "Member Type"))
+dev.off()
 ```

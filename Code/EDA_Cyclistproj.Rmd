@@ -189,11 +189,11 @@ dev.off()
 ```{r}
 # Bar plots: 
 jpeg("annualmentmonth.jpeg")
-barplot(table(annual_mem$start_month),main = "Annual Members Number of Use By Month",xlab = "Month",ylab = "Number of Cyclist",border = "black",names.arg = c("Jan","Feb","Mar"),col = "blue",density = 50000)
+barplot(table(annual_mem$start_month),main = "Annual Members Number of Use By Month",xlab = "Month",ylab = "Number of Cyclist Trips ",border = "black",names.arg = c("Jan","Feb","Mar"),col = "blue",density = 50000)
 dev.off()
 
 jpeg("casualmemmonth.jpeg")
-barplot(table(casual_mem$start_month),main = "Casual Cyclist Users Number of Use By Month",xlab = "Month",ylab = "Number of Cyclist",names.arg = c("Jan","Feb","Mar"),border = "black",col = "gray",density = 50000)+geom_text(aes(label = signif(Start_month)))
+barplot(table(casual_mem$start_month),main = "Casual Cyclist Users Number of Use By Month",xlab = "Month",ylab = "Number of Cyclist Trips",names.arg = c("Jan","Feb","Mar"),border = "black",col = "gray",density = 50000)+geom_text(aes(label = signif(Start_month)))
 dev.off()
 
 jpeg("CasualAnnualCompar.jpeg")

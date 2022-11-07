@@ -186,6 +186,7 @@ text(cd$mids,cd$counts,labels=cd$counts,adj = c(0.5,-0.5))
 dev.off()
 
 ```
+
 ```{r}
 # Bar plots: 
 jpeg("annualmentmonth.jpeg")
